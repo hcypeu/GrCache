@@ -1,2 +1,2 @@
 # GrCache
-自建cdn
+nginx_domain_cache
