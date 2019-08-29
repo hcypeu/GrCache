@@ -58,10 +58,10 @@ UPNAME=$(cat /dev/urandom | head -n 10 | md5sum | head -c 32)
 
 #创建nginx配置相关目录
     echo "创建相关目录中..."
-    [ ! -e "${NGINX_DIR}/conf/vhost/index.conf" ] && touch "${NGINX_DIR}/conf/vhost/index.conf"
     [ ! -d "${NGINX_DIR}/conf/ssl" ] && mkdir -p "${NGINX_DIR}/conf/ssl"
     [ ! -d "${NGINX_DIR}/conf/vhost" ] && mkdir -p "${NGINX_DIR}/conf/vhost"
     [ ! -d "${NGINX_DIR}/conf/vhost/$PROJECT" ] && mkdir -p "${NGINX_DIR}/conf/vhost/$PROJECT" && echo "#${PROJECT} Configuration Directory;" >> "${NGINX_DIR}/conf/vhost/index.conf" && echo "include ${NGINX_DIR}/conf/vhost/$PROJECT/*.conf;" >> "${NGINX_DIR}/conf/vhost/index.conf"
+    [ ! -e "${NGINX_DIR}/conf/vhost/index.conf" ] && touch "${NGINX_DIR}/conf/vhost/index.conf"
     [ ! -d /data/wwwlogs ] && mkdir -p /data/wwwlogs
     [ ! -d /data/cache ] && mkdir -p /data/cache
 
@@ -87,7 +87,7 @@ server {
     ssl_session_timeout 10m;
     ssl_session_cache shared:SSL:10m;
     ssl_buffer_size 1400;
-    add_header Strict-Transport-Security max-age=31536000; preload;
+    add_header Strict-Transport-Security "max-age=31536000; preload";
     ssl_stapling on;
     ssl_stapling_verify on;
     server_name ${DOMAIN} ${MORE_DOMAIN};
