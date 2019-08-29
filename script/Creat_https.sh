@@ -105,7 +105,7 @@ server {
     proxy_http_version 1.1;
     proxy_set_header Connection '';
     proxy_cache cache_one;
-    proxy_cache_key '"\$host$request_uri\$cookie_user"';
+    proxy_cache_key '"\$host\$request_uri\$cookie_user"';
     proxy_ignore_headers X-Accel-Limit-Rate;
     location / {
         proxy_pass http://$UPNAME;
