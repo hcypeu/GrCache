@@ -79,7 +79,7 @@ server {
     listen 80;
     server_name ${DOMAIN} ${MORE_DOMAIN};
     add_header Via \$hostname;
-    access_log /data/wwwlogs/${DOMAIN}_nginx.log combined;
+    access_log /data/wwwlogs/${DOMAIN}_nginx.log main;
     error_log /data/wwwlogs/error_nginx.log;
     if (\$host != $DOMAIN) {  return 301 \$scheme://$DOMAIN\$request_uri;  }
     add_header GR-Cache-Status \$upstream_cache_status;
@@ -100,17 +100,19 @@ server {
     location ~ \.(js|css|tpl|txt|xml)$ {
         proxy_pass http://$UPNAME;
         gzip on;
-        proxy_cache_valid 200 304 1d;
+        proxy_cache_valid 200 304 3d;
     }
     location ~ \.(jpeg|jpg|png|svg|gif|m3u8|ts)$ {
         proxy_pass http://$UPNAME;
-        proxy_cache_valid 200 304 7d;
-        expires 7d;
+        gzip off;
+        proxy_cache_valid 200 304 10d;
+        expires 10d;
     }
     location ~ \.(woff|woff2|eot|font|fon|ttf|otf|ttc)$ {
         proxy_pass http://$UPNAME;
-        proxy_cache_valid 200 304 15d;
-        expires 15d;
+        gzip off;
+        proxy_cache_valid 200 304 30d;
+        expires 30d;
     }
 }
 EOF
