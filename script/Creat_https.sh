@@ -115,8 +115,9 @@ server {
         proxy_pass http://$UPNAME;
         gzip on;
         proxy_cache_valid 200 304 3d;
+        expires 1;
     }
-    location ~ \.(jpeg|jpg|png|svg|gif|m3u8|ts)$ {
+    location ~ \.(jpeg|jpg|png|svg|gif|m3u8|ts|mp3)$ {
         proxy_pass http://$UPNAME;
         gzip off;
         proxy_cache_valid 200 304 10d;
