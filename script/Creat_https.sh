@@ -108,8 +108,6 @@ server {
     proxy_cache_key '"\$host\$request_uri\$cookie_user"';
     proxy_ignore_headers X-Accel-Limit-Rate;
     proxy_ignore_headers Set-Cookie Cache-Control;
-    proxy_hide_header Cache-Control;
-    proxy_hide_header Set-Cookie;
     location / {
         proxy_pass http://$UPNAME;
         proxy_cache_valid 200 304 60s;
