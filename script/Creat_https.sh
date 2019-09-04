@@ -104,29 +104,36 @@ server {
     proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     proxy_http_version 1.1;
     proxy_set_header Connection '';
-    proxy_cache cache_one;
-    proxy_cache_key '"\$host\$request_uri\$cookie_user"';
-    proxy_ignore_headers X-Accel-Limit-Rate;
-    proxy_ignore_headers Set-Cookie Cache-Control;
     location / {
         proxy_pass http://$UPNAME;
-        proxy_cache_valid 200 304 60s;
     }
-    location ~ \.(js|css|tpl|txt|xml)$ {
+    location ~ \.(js|css|tpl|txt|xml|html)$ {
         proxy_pass http://$UPNAME;
         gzip on;
+        proxy_cache cache_one;
+        proxy_cache_key '"\$host\$request_uri\$cookie_user"';
+        proxy_ignore_headers X-Accel-Limit-Rate;
+        proxy_ignore_headers Set-Cookie Cache-Control;
         proxy_cache_valid 200 304 3d;
-        expires 1;
+        expires 3;
     }
     location ~ \.(jpeg|jpg|png|svg|gif|m3u8|ts|mp3)$ {
         proxy_pass http://$UPNAME;
         gzip off;
+        proxy_cache cache_one;
+        proxy_cache_key '"\$host\$request_uri\$cookie_user"';
+        proxy_ignore_headers X-Accel-Limit-Rate;
+        proxy_ignore_headers Set-Cookie Cache-Control;
         proxy_cache_valid 200 304 10d;
         expires 10d;
     }
     location ~ \.(woff|woff2|eot|font|fon|ttf|otf|ttc)$ {
         proxy_pass http://$UPNAME;
         gzip off;
+        proxy_cache cache_one;
+        proxy_cache_key '"\$host\$request_uri\$cookie_user"';
+        proxy_ignore_headers X-Accel-Limit-Rate;
+        proxy_ignore_headers Set-Cookie Cache-Control;
         proxy_cache_valid 200 304 30d;
         expires 30d;
     }
