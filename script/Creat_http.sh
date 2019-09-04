@@ -92,13 +92,8 @@ server {
     proxy_set_header Connection '';
     location / {
         proxy_pass http://$UPNAME;
-        proxy_cache cache_one;
-        proxy_cache_key '"\$host\$request_uri\$cookie_user"';
-        proxy_ignore_headers X-Accel-Limit-Rate;
-        proxy_ignore_headers Set-Cookie Cache-Control;
-        proxy_cache_valid 200 304 60s;
     }
-    location ~ \.(js|css|tpl|txt|xml)$ {
+    location ~ \.(js|css|tpl|txt|xml|html)$ {
         proxy_pass http://$UPNAME;
         gzip on;
         proxy_cache cache_one;
@@ -106,7 +101,7 @@ server {
         proxy_ignore_headers X-Accel-Limit-Rate;
         proxy_ignore_headers Set-Cookie Cache-Control;
         proxy_cache_valid 200 304 3d;
-        expires 1d;
+        expires 3d;
     }
     location ~ \.(jpeg|jpg|png|svg|gif|m3u8|ts|mp3)$ {
         proxy_pass http://$UPNAME;
